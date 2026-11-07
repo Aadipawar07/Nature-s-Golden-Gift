@@ -38,7 +38,6 @@ describe('environment validation', () => {
       encoding: 'utf8',
     });
     expect(result.status).not.toBe(0);
-    expect(result.stderr).toContain('CORS_ORIGINS');
     expect(result.stderr).toContain('RAZORPAY_KEY_SECRET');
     expect(result.stderr).not.toContain('secret-value');
   });

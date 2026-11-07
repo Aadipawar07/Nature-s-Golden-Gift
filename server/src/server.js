@@ -6,7 +6,15 @@ import { logger } from './config/logger.js';
 let server;
 
 async function start() {
-  await connectDb();
+  try {
+    await connectDb();
+  } catch (error) {
+    if (!['development', 'test'].includes(env.NODE_ENV)) throw error;
+    logger.warn(
+      { err: error },
+      'database unavailable; starting with disconnected health state',
+    );
+  }
   server = app.listen(env.PORT, () =>
     logger.info({ port: env.PORT }, 'server started'),
   );

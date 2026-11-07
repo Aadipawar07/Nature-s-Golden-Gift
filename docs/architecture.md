@@ -2,17 +2,17 @@
 
 ## 1. Tech stack
 
-| Layer              | Choice                        | Notes                                                                                                                                         |
-| ------------------ | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Frontend           | React (Vite)                  | Fast dev server, simpler than CRA                                                                                                             |
-| Backend            | Node.js + Express             | Single source of truth for all business logic                                                                                                 |
-| Database           | MongoDB (Atlas in production) | Mongoose ODM                                                                                                                                  |
-| Auth               | JWT + bcrypt (custom)         | Simple for solo admin + customer accounts. Firebase Auth is a fine alternative if you later want Google/phone-OTP login — not required for v1 |
-| Payments           | Razorpay                      | UPI/card/netbanking/wallet                                                                                                                    |
-| Shipping           | Shiprocket                    | Courier aggregator API                                                                                                                        |
-| Hosting — frontend | Vercel                        | Auto HTTPS, fast global CDN                                                                                                                   |
-| Hosting — backend  | Render or Railway             | Set env vars in host dashboard, never in code                                                                                                 |
-| Image hosting      | Cloudinary or similar         | Don't store product images in MongoDB or on the backend server disk                                                                           |
+| Layer              | Choice                        | Notes                                                                          |
+| ------------------ | ----------------------------- | ------------------------------------------------------------------------------ |
+| Frontend           | React (Vite)                  | Fast dev server, simpler than CRA                                              |
+| Backend            | Node.js + Express             | Single source of truth for all business logic                                  |
+| Database           | MongoDB (Atlas in production) | Mongoose ODM                                                                   |
+| Auth               | Firebase Auth + Admin SDK     | Identity is handled by Firebase; roles and application data remain server-side |
+| Payments           | Razorpay                      | UPI/card/netbanking/wallet                                                     |
+| Shipping           | Shiprocket                    | Courier aggregator API                                                         |
+| Hosting — frontend | Vercel                        | Auto HTTPS, fast global CDN                                                    |
+| Hosting — backend  | Render or Railway             | Set env vars in host dashboard, never in code                                  |
+| Image hosting      | Cloudinary or similar         | Don't store product images in MongoDB or on the backend server disk            |
 
 ## 2. High-level system diagram
 
@@ -97,7 +97,7 @@ Site is multi-page (not a single scrolling landing page) — see §5.3 for the f
 ### Backend
 
 ```
-/backend
+/server
   /src
     /config        (db.js, env.js)
     /models        (Product.js, Order.js, Payment.js, Shipment.js, User.js)
@@ -117,7 +117,7 @@ Site is multi-page (not a single scrolling landing page) — see §5.3 for the f
 ### Frontend
 
 ```
-/frontend
+/apps/storefront
   /src
     /pages
       /account       (Dashboard.jsx, Orders.jsx, OrderDetail.jsx, TrackOrder.jsx)
@@ -159,8 +159,8 @@ Keep `prd.md`, `architecture.md`, `rules.md`, `phases.md`, `design.md`, and `mem
     phases.md
     design.md
     memory.md
-  /frontend
-  /backend
+  /apps/storefront
+  /server
   README.md
   .gitignore
 ```
