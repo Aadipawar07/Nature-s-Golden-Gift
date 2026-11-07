@@ -31,4 +31,9 @@ export default [
     languageOptions: { globals: globals.node, sourceType: 'module' },
     rules: { 'no-console': 'off' },
   },
+  {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: { globals: globals.node, sourceType: 'module' },
+    rules: { 'no-console': 'off' },
+  },
 ];
