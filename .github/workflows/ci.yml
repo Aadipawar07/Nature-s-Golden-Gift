@@ -23,4 +23,5 @@ jobs:
       - run: npm audit --audit-level=high
       - run: bash scripts/secret-grep.sh
       - run: bash scripts/secret-grep.sh --self-test
-      - run: npm run size -w @ngg/storefront
+      - run: npm run size
+        working-directory: apps/storefront
