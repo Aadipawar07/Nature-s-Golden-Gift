@@ -6,6 +6,7 @@ import globals from 'globals';
 export default [
   { ignores: ['**/dist/**', '**/node_modules/**', 'plan.tmp.txt'] },
   js.configs.recommended,
+  { files: ['apps/storefront/**/*.jsx'], rules: { 'react/no-unescaped-entities': 'off' } },
   {
     files: ['apps/**/*.js', 'apps/**/*.jsx'],
     languageOptions: { globals: { ...globals.browser, ...globals.node }, parserOptions: { ecmaFeatures: { jsx: true } } },
