@@ -7,7 +7,9 @@ export const getDbState = () =>
 export async function connectDb({ retries = 5, baseDelayMs = 250 } = {}) {
   for (let attempt = 0; attempt < retries; attempt += 1) {
     try {
-      await mongoose.connect(env.MONGODB_URI, { serverSelectionTimeoutMS: 1000 });
+      await mongoose.connect(env.MONGODB_URI, {
+        serverSelectionTimeoutMS: 1000,
+      });
       return;
     } catch (error) {
       if (attempt === retries - 1) throw error;
