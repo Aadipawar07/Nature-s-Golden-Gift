@@ -30,6 +30,10 @@ describe('environment validation', () => {
         NODE_ENV: 'production',
         PORT: '5000',
         MONGODB_URI: 'mongodb://secret-value',
+        CORS_ORIGINS: 'http://localhost:5173',
+        FRONTEND_URL: 'http://localhost:5173',
+        ADMIN_URL: 'http://localhost:5174',
+        BACKEND_URL: 'http://localhost:5000',
       },
       encoding: 'utf8',
     });
