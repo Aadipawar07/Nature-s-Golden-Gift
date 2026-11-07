@@ -2,17 +2,17 @@
 
 ## 1. Tech stack
 
-| Layer | Choice | Notes |
-|---|---|---|
-| Frontend | React (Vite) | Fast dev server, simpler than CRA |
-| Backend | Node.js + Express | Single source of truth for all business logic |
-| Database | MongoDB (Atlas in production) | Mongoose ODM |
-| Auth | JWT + bcrypt (custom) | Simple for solo admin + customer accounts. Firebase Auth is a fine alternative if you later want Google/phone-OTP login — not required for v1 |
-| Payments | Razorpay | UPI/card/netbanking/wallet |
-| Shipping | Shiprocket | Courier aggregator API |
-| Hosting — frontend | Vercel | Auto HTTPS, fast global CDN |
-| Hosting — backend | Render or Railway | Set env vars in host dashboard, never in code |
-| Image hosting | Cloudinary or similar | Don't store product images in MongoDB or on the backend server disk |
+| Layer              | Choice                        | Notes                                                                                                                                         |
+| ------------------ | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Frontend           | React (Vite)                  | Fast dev server, simpler than CRA                                                                                                             |
+| Backend            | Node.js + Express             | Single source of truth for all business logic                                                                                                 |
+| Database           | MongoDB (Atlas in production) | Mongoose ODM                                                                                                                                  |
+| Auth               | JWT + bcrypt (custom)         | Simple for solo admin + customer accounts. Firebase Auth is a fine alternative if you later want Google/phone-OTP login — not required for v1 |
+| Payments           | Razorpay                      | UPI/card/netbanking/wallet                                                                                                                    |
+| Shipping           | Shiprocket                    | Courier aggregator API                                                                                                                        |
+| Hosting — frontend | Vercel                        | Auto HTTPS, fast global CDN                                                                                                                   |
+| Hosting — backend  | Render or Railway             | Set env vars in host dashboard, never in code                                                                                                 |
+| Image hosting      | Cloudinary or similar         | Don't store product images in MongoDB or on the backend server disk                                                                           |
 
 ## 2. High-level system diagram
 
@@ -50,11 +50,13 @@ Browse products
 Order, Payment, and Shipment each get their **own status field** — never one shared enum. An order can be `CONFIRMED` while its payment is `REFUNDED` and its shipment is `RTO_INITIATED`, simultaneously.
 
 ### Product
+
 ```
 { name, description, images[], variants: [{ sku, sizeLabel, price, stock, weightGrams }] }
 ```
 
 ### Order
+
 ```
 {
   orderNumber, userId, items: [{ productId, sku, sizeLabel, qty, price }],
@@ -66,12 +68,14 @@ Order, Payment, and Shipment each get their **own status field** — never one s
 ```
 
 ### Payment
+
 ```
 { orderId, razorpayOrderId, razorpayPaymentId, razorpaySignature, amount,
   status: CREATED | PAID | FAILED | REFUNDED | PARTIALLY_REFUNDED }
 ```
 
 ### Shipment
+
 ```
 { orderId, shiprocketOrderId, awbCode, courierName, weightGrams,
   status: CREATED | AWB_ASSIGNED | PICKED_UP | IN_TRANSIT | OUT_FOR_DELIVERY | DELIVERED | RTO_INITIATED | RTO_DELIVERED,
@@ -79,17 +83,19 @@ Order, Payment, and Shipment each get their **own status field** — never one s
 ```
 
 ### User
+
 ```
 { email, passwordHash, role: CUSTOMER | ADMIN, addresses: [...] }
 ```
 
-*(Return and AuditLog collections are deferred to post-launch — see `phases.md`.)*
+_(Return and AuditLog collections are deferred to post-launch — see `phases.md`.)_
 
 ## 5. Folder structure
 
 Site is multi-page (not a single scrolling landing page) — see §5.3 for the full route map. Navbar: Home · Shop · About · Contact · Cart.
 
 ### Backend
+
 ```
 /backend
   /src
@@ -109,6 +115,7 @@ Site is multi-page (not a single scrolling landing page) — see §5.3 for the f
 ```
 
 ### Frontend
+
 ```
 /frontend
   /src
@@ -140,7 +147,9 @@ Site is multi-page (not a single scrolling landing page) — see §5.3 for the f
 ```
 
 ### 5.1 Where the six planning docs live
+
 Keep `prd.md`, `architecture.md`, `rules.md`, `phases.md`, `design.md`, and `memory.md` in a `/docs` folder at the **repo root** — outside both `/frontend` and `/backend`, since they describe the whole project, not one half of it:
+
 ```
 /nature-golden-gift          (repo root)
   /docs
@@ -155,9 +164,11 @@ Keep `prd.md`, `architecture.md`, `rules.md`, `phases.md`, `design.md`, and `mem
   README.md
   .gitignore
 ```
+
 This keeps them visible to anyone opening the repo root (including an AI coding assistant reading the project for context) without cluttering either app's own source tree. Commit them to Git like any other file — they're documentation, not secrets.
 
 ### 5.2 Security notes on the scaffold itself
+
 - `.gitignore` must include `.env`, `node_modules/`, `/frontend/dist`, `/backend/dist`, `*.log`, `.DS_Store` — set this up in the very first commit, before any real code.
 - Never create a real `.env` — only `.env.example` with placeholder values (see `rules.md` §1).
 - `/backend/src/services` is the only place Razorpay/Shiprocket credentials are referenced — never imported into `/routes` or `/controllers` directly.
@@ -176,17 +187,18 @@ This keeps them visible to anyone opening the repo root (including an AI coding 
 
 ## 6. Core API endpoints (v1)
 
-| Endpoint | Caller | Purpose |
-|---|---|---|
-| `GET /api/products` | Frontend | List product + variants |
-| `POST /api/orders` | Frontend, at checkout | Create Order, status `PENDING_PAYMENT`, server-calculated total |
-| `POST /api/payments/create-order` | Frontend | Calls Razorpay Orders API using DB amount, returns `razorpay_order_id` |
-| `POST /api/payments/verify` | Frontend, after Checkout success | Verifies HMAC signature, marks Payment `PAID`, Order `CONFIRMED`, decrements stock |
-| `POST /api/payments/webhook` | Razorpay servers | Independent confirmation — source of truth even if verify never fires |
-| `POST /api/shipments/create` | Backend (internal, triggered post-payment) | Creates Shiprocket order + AWB |
-| `GET /api/shipments/track/:awb` | Frontend / Admin | Shows current tracking status |
-| `GET /api/admin/orders` | Admin panel | List all orders with all three statuses |
-| `POST /api/admin/orders/:id/mark-packed` | Admin panel | Manual override if automation needs a nudge |
+| Endpoint                                 | Caller                                     | Purpose                                                                            |
+| ---------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------- |
+| `GET /api/products`                      | Frontend                                   | List product + variants                                                            |
+| `POST /api/orders`                       | Frontend, at checkout                      | Create Order, status `PENDING_PAYMENT`, server-calculated total                    |
+| `POST /api/payments/create-order`        | Frontend                                   | Calls Razorpay Orders API using DB amount, returns `razorpay_order_id`             |
+| `POST /api/payments/verify`              | Frontend, after Checkout success           | Verifies HMAC signature, marks Payment `PAID`, Order `CONFIRMED`, decrements stock |
+| `POST /api/payments/webhook`             | Razorpay servers                           | Independent confirmation — source of truth even if verify never fires              |
+| `POST /api/shipments/create`             | Backend (internal, triggered post-payment) | Creates Shiprocket order + AWB                                                     |
+| `GET /api/shipments/track/:awb`          | Frontend / Admin                           | Shows current tracking status                                                      |
+| `GET /api/admin/orders`                  | Admin panel                                | List all orders with all three statuses                                            |
+| `POST /api/admin/orders/:id/mark-packed` | Admin panel                                | Manual override if automation needs a nudge                                        |
 
 ## 7. Webhooks — critical implementation note
+
 The webhook route **must** use `express.raw({ type: 'application/json' })`, not the global `express.json()` parser, or HMAC signature verification will always fail. Mount this route before any global JSON body-parser middleware, or exclude it explicitly.

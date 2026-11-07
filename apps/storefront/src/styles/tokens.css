@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-	--cream: #fbf5e9;
-	--beige: #f5ead6;
-	--beige-card: #eee0c4;
-	--beige-deep: #e4ce9e;
-	--ink: #241708;
-	--ink-soft: #5c4a2e;
-	--gold: #e1a22b;
-	--gold-deep: #b8791a;
-	--gold-pale: #f0c36a;
-	--rust: #b65b2a;
-	--emerald: #3f5a3d;
-	--emerald-pale: #dce7d3;
-	--line: #d9c39a;
+  --cream: #fbf5e9;
+  --beige: #f5ead6;
+  --beige-card: #eee0c4;
+  --beige-deep: #e4ce9e;
+  --ink: #241708;
+  --ink-soft: #5c4a2e;
+  --gold: #e1a22b;
+  --gold-deep: #b8791a;
+  --gold-pale: #f0c36a;
+  --rust: #b65b2a;
+  --emerald: #3f5a3d;
+  --emerald-pale: #dce7d3;
+  --line: #d9c39a;
 }

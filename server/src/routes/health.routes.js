@@ -7,7 +7,12 @@ const router = Router();
 router.get('/health', (req, res) => {
   res.json({
     success: true,
-    data: { status: 'ok', uptime: process.uptime(), db: getDbState(), env: env.NODE_ENV },
+    data: {
+      status: 'ok',
+      uptime: process.uptime(),
+      db: getDbState(),
+      env: env.NODE_ENV,
+    },
   });
 });
 

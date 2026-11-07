@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { spawnSync } from 'node:child_process';
 
-const source = new URL('../src/config/env.js', import.meta.url);
+const source = JSON.stringify(
+  new URL('../src/config/env.js', import.meta.url).href,
+);
 
 describe('environment validation', () => {
   it('allows provider keys to be absent in development', () => {
-    const result = spawnSync(process.execPath, ['-e', `import('${source.href}')`], {
+    const result = spawnSync(process.execPath, ['-e', `import(${source})`], {
       env: {
         ...process.env,
         NODE_ENV: 'development',
@@ -22,8 +24,13 @@ describe('environment validation', () => {
   });
 
   it('fails production startup while listing names, not values', () => {
-    const result = spawnSync(process.execPath, ['-e', `import('${source.href}')`], {
-      env: { ...process.env, NODE_ENV: 'production', PORT: '5000', MONGODB_URI: 'mongodb://secret-value' },
+    const result = spawnSync(process.execPath, ['-e', `import(${source})`], {
+      env: {
+        ...process.env,
+        NODE_ENV: 'production',
+        PORT: '5000',
+        MONGODB_URI: 'mongodb://secret-value',
+      },
       encoding: 'utf8',
     });
     expect(result.status).not.toBe(0);

@@ -7,16 +7,306 @@ import Marquee from '../components/common/Marquee';
 import NewsletterForm from '../components/common/NewsletterForm';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 
-function Section({ children, className = '' }) { const ref = useIntersectionObserver(); return <section ref={ref} className={`reveal container-shell py-20 md:py-28 ${className}`}>{children}</section>; }
-function HeroArt() { const stageRef = useRef(null); const tiltRef = useRef(null); useEffect(() => { const stage = stageRef.current; const tilt = tiltRef.current; if (!stage || !tilt || !window.matchMedia('(pointer: fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined; const move = (event) => { const rect = stage.getBoundingClientRect(); const x = (event.clientX - rect.left) / rect.width - 0.5; const y = (event.clientY - rect.top) / rect.height - 0.5; tilt.style.setProperty('--tilt-x', `${x * 16}deg`); tilt.style.setProperty('--tilt-y', `${-y * 12}deg`); }; const reset = () => { tilt.style.setProperty('--tilt-x', '0deg'); tilt.style.setProperty('--tilt-y', '0deg'); }; stage.addEventListener('mousemove', move); stage.addEventListener('mouseleave', reset); return () => { stage.removeEventListener('mousemove', move); stage.removeEventListener('mouseleave', reset); }; }, []); return <div ref={stageRef} className="tilt-stage grid place-items-center"><div ref={tiltRef} className="tilt-el relative"><div className="orb-wrap"><div className="orb-ring" /><div className="orb-core" /></div><div className="product-frame absolute inset-0 grid place-items-center"><div className="pouch"><span className="pouch-label">Nature's <em>Golden</em> Gift<small>single origin turmeric</small></span></div></div><div className="bracket card-hover absolute -right-10 top-2 rounded-2xl border-2 border-ink bg-beige px-4 py-3 shadow-xl"><p className="font-mono text-[10px] text-inkSoft">Certified</p><p className="font-bold text-emerald">✓ 100% Organic</p></div><div className="bracket card-hover absolute -bottom-2 -left-10 rounded-2xl border-2 border-ink bg-beige px-4 py-3 shadow-xl"><p className="font-mono text-[10px] text-inkSoft">Composition</p><p className="font-bold text-sm">High Curcumin</p></div></div></div>; }
+function Section({ children, className = '' }) {
+  const ref = useIntersectionObserver();
+  return (
+    <section
+      ref={ref}
+      className={`reveal container-shell py-20 md:py-28 ${className}`}
+    >
+      {children}
+    </section>
+  );
+}
+function HeroArt() {
+  const stageRef = useRef(null);
+  const tiltRef = useRef(null);
+  useEffect(() => {
+    const stage = stageRef.current;
+    const tilt = tiltRef.current;
+    if (
+      !stage ||
+      !tilt ||
+      !window.matchMedia('(pointer: fine)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
+      return undefined;
+    const move = (event) => {
+      const rect = stage.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      tilt.style.setProperty('--tilt-x', `${x * 16}deg`);
+      tilt.style.setProperty('--tilt-y', `${-y * 12}deg`);
+    };
+    const reset = () => {
+      tilt.style.setProperty('--tilt-x', '0deg');
+      tilt.style.setProperty('--tilt-y', '0deg');
+    };
+    stage.addEventListener('mousemove', move);
+    stage.addEventListener('mouseleave', reset);
+    return () => {
+      stage.removeEventListener('mousemove', move);
+      stage.removeEventListener('mouseleave', reset);
+    };
+  }, []);
+  return (
+    <div ref={stageRef} className="tilt-stage grid place-items-center">
+      <div ref={tiltRef} className="tilt-el relative">
+        <div className="orb-wrap">
+          <div className="orb-ring" />
+          <div className="orb-core" />
+        </div>
+        <div className="product-frame absolute inset-0 grid place-items-center">
+          <div className="pouch">
+            <span className="pouch-label">
+              Nature's <em>Golden</em> Gift<small>single origin turmeric</small>
+            </span>
+          </div>
+        </div>
+        <div className="bracket card-hover absolute -right-10 top-2 rounded-2xl border-2 border-ink bg-beige px-4 py-3 shadow-xl">
+          <p className="font-mono text-[10px] text-inkSoft">Certified</p>
+          <p className="font-bold text-emerald">✓ 100% Organic</p>
+        </div>
+        <div className="bracket card-hover absolute -bottom-2 -left-10 rounded-2xl border-2 border-ink bg-beige px-4 py-3 shadow-xl">
+          <p className="font-mono text-[10px] text-inkSoft">Composition</p>
+          <p className="font-bold text-sm">High Curcumin</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-export default function Home() { return <>
-	<section className="relative overflow-hidden"><div className="blob blob-gold" /><div className="blob blob-rust" /><div className="container-shell relative grid items-center gap-12 py-12 lg:grid-cols-2 lg:py-16"><div><span className="stamp inline-block rounded-full bg-beige/80 px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest text-goldDeep">Organic · Licensed · Single Origin</span><h1 className="mt-8 max-w-xl font-display text-[3.2rem] font-semibold leading-[1.05] tracking-tight md:text-7xl">The gold that heals <span className="text-goldDeep">from within</span>.</h1><p className="mt-7 max-w-lg text-lg leading-relaxed text-inkSoft">Grown without chemicals, sun-dried slowly, and stone-ground the same week it's harvested. No fillers, no bleaching, no shortcuts — just turmeric the way it was meant to be.</p><div className="mt-8 flex flex-wrap gap-4"><Link className="btn-primary rounded-full px-7 py-4 font-bold text-beige" to="/shop">Shop turmeric powder →</Link><Link className="btn-ghost rounded-full border-2 border-ink/20 px-7 py-4 font-bold" to="/about">Read our story</Link></div><div className="mt-8"><TrustBadges /><div className="mt-4 grid gap-x-5 gap-y-2 text-sm font-medium text-inkSoft sm:grid-cols-2"><span>✓ 30-Day Freshness Guarantee</span><span>✓ Secure Razorpay Checkout</span><span>✓ Easy 7-Day Returns</span></div></div></div><HeroArt /></div></section>
-	<Marquee />
-	<Section className="difference-section"><p className="eyebrow text-center">The Difference</p><h2 className="section-title mx-auto max-w-3xl text-center">Most turmeric on shelves is polished to look good. Ours is grown to actually work.</h2><div className="mt-16 grid gap-8 md:grid-cols-2"><div className="bracket rounded-3xl border-2 border-rust/30 bg-beigeCard p-10"><p className="eyebrow text-rust">✕ Typical market turmeric</p><ul className="mt-6 space-y-5 text-base leading-relaxed text-inkSoft"><li className="flex gap-4"><span className="font-bold text-rust">—</span><span>Bleached or polished with additives to look brighter on the shelf</span></li><li className="flex gap-4"><span className="font-bold text-rust">—</span><span>Often cut with starch or chalk powder to bulk up weight</span></li><li className="flex gap-4"><span className="font-bold text-rust">—</span><span>Machine-dried fast, which cooks off curcumin content</span></li><li className="flex gap-4"><span className="font-bold text-rust">—</span><span>Ground months before it reaches your kitchen, aroma long gone</span></li></ul></div><div className="bracket grid-bg rounded-3xl bg-ink p-10 text-beige"><p className="eyebrow text-goldPale">✓ Nature's Golden Gift</p><ul className="mt-6 space-y-5 text-base leading-relaxed text-beige/85"><li className="flex gap-4"><span className="font-bold text-goldPale">→</span><span>Grown by partner farms without synthetic fertilizers or bleach</span></li><li className="flex gap-4"><span className="font-bold text-goldPale">→</span><span>Nothing added — what's in the pouch is only turmeric</span></li><li className="flex gap-4"><span className="font-bold text-goldPale">→</span><span>Sun-dried slowly over two weeks to preserve curcumin and oils</span></li><li className="flex gap-4"><span className="font-bold text-goldPale">→</span><span>Ground fresh in small batches, sealed within 48 hours</span></li></ul></div></div></Section>
-	<Section className="stats-section py-0"><div className="grid gap-5 md:grid-cols-3">{[['15 Days','Slow sun-drying preserves oils.'],['0','Additives, fillers or bleaching agents.'],['48 Hrs','Grinding to airtight sealing.']].map(([number, text]) => <div className="bracket rounded-3xl border-2 border-ink/10 bg-beigeCard p-7" key={number}><p className="font-display text-4xl font-bold text-goldDeep">{number}</p><p className="mt-2 text-sm text-inkSoft">{text}</p></div>)}</div></Section>
-	<section className="process-band grid-bg bg-ink text-beige"><div className="container-shell py-20 md:py-28"><p className="eyebrow text-goldPale">From Root To Jar</p><h2 className="section-title max-w-xl">Four steps, nothing skipped — most mass-market turmeric compresses this into one.</h2><div className="process-steps relative mt-16 grid gap-10 md:grid-cols-4"><div className="process-rule hidden md:block" />{[['01','Hand-harvested','Picked by partner farms once the rhizomes reach full maturity.'],['02','Sun-dried, 15 days','Slow natural drying preserves oils and curcumin content.'],['03','Stone-ground fresh','Ground in small batches to avoid heat damage from fast milling.'],['04','Sealed in 48 hours','Packed airtight before aroma and potency can fade.']].map(([number, title, text]) => <article className="relative" key={number}><p className="relative z-10 font-mono text-sm font-bold text-goldPale">{number}</p><h3 className="mt-5 font-display text-xl font-semibold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-beige/60">{text}</p></article>)}</div></div></section>
-	<Section className="bg-ink text-beige"><p className="eyebrow text-goldPale">Shop the collection</p><h2 className="section-title">Same single-origin batch, three ways to bring it home.</h2><div className="mt-12 grid gap-6 md:grid-cols-3">{products.map((product) => <ProductCard key={product.slug} product={product} />)}</div><Link to="/shop" className="btn-ghost mt-10 inline-block rounded-full border-2 border-beige/30 px-6 py-3 font-bold">View the full shop →</Link></Section>
-	<Section><p className="eyebrow">From kitchens like yours</p><h2 className="section-title max-w-2xl">Sample placeholder quotes, ready to be replaced by real reviews.</h2><div className="mt-12 grid gap-6 md:grid-cols-3">{testimonials.map(([quote, author]) => <blockquote key={author} className="bracket rounded-3xl border-2 border-ink/10 bg-cream p-7"><p className="font-display text-lg italic leading-snug">“{quote}”</p><cite className="mt-6 block font-mono text-[10px] uppercase tracking-widest text-inkSoft">{author}</cite></blockquote>)}</div></Section>
-	<Section className="pt-0"><div className="grid gap-8 rounded-[2rem] bg-gradient-to-br from-goldDeep to-rust p-8 text-beige md:grid-cols-2 md:p-14"><div><h2 className="font-display text-4xl font-semibold">Get 10% off your first order.</h2><p className="mt-3 text-beige/80">No spam, just a code and occasional restock notes.</p></div><NewsletterForm /></div></Section>
-</>; }
+export default function Home() {
+  return (
+    <>
+      <section className="relative overflow-hidden">
+        <div className="blob blob-gold" />
+        <div className="blob blob-rust" />
+        <div className="container-shell relative grid items-center gap-12 py-12 lg:grid-cols-2 lg:py-16">
+          <div>
+            <span className="stamp inline-block rounded-full bg-beige/80 px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest text-goldDeep">
+              Organic · Licensed · Single Origin
+            </span>
+            <h1 className="mt-8 max-w-xl font-display text-[3.2rem] font-semibold leading-[1.05] tracking-tight md:text-7xl">
+              The gold that heals{' '}
+              <span className="text-goldDeep">from within</span>.
+            </h1>
+            <p className="mt-7 max-w-lg text-lg leading-relaxed text-inkSoft">
+              Grown without chemicals, sun-dried slowly, and stone-ground the
+              same week it's harvested. No fillers, no bleaching, no shortcuts —
+              just turmeric the way it was meant to be.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                className="btn-primary rounded-full px-7 py-4 font-bold text-beige"
+                to="/shop"
+              >
+                Shop turmeric powder →
+              </Link>
+              <Link
+                className="btn-ghost rounded-full border-2 border-ink/20 px-7 py-4 font-bold"
+                to="/about"
+              >
+                Read our story
+              </Link>
+            </div>
+            <div className="mt-8">
+              <TrustBadges />
+              <div className="mt-4 grid gap-x-5 gap-y-2 text-sm font-medium text-inkSoft sm:grid-cols-2">
+                <span>✓ 30-Day Freshness Guarantee</span>
+                <span>✓ Secure Razorpay Checkout</span>
+                <span>✓ Easy 7-Day Returns</span>
+              </div>
+            </div>
+          </div>
+          <HeroArt />
+        </div>
+      </section>
+      <Marquee />
+      <Section className="difference-section">
+        <p className="eyebrow text-center">The Difference</p>
+        <h2 className="section-title mx-auto max-w-3xl text-center">
+          Most turmeric on shelves is polished to look good. Ours is grown to
+          actually work.
+        </h2>
+        <div className="mt-16 grid gap-8 md:grid-cols-2">
+          <div className="bracket rounded-3xl border-2 border-rust/30 bg-beigeCard p-10">
+            <p className="eyebrow text-rust">✕ Typical market turmeric</p>
+            <ul className="mt-6 space-y-5 text-base leading-relaxed text-inkSoft">
+              <li className="flex gap-4">
+                <span className="font-bold text-rust">—</span>
+                <span>
+                  Bleached or polished with additives to look brighter on the
+                  shelf
+                </span>
+              </li>
+              <li className="flex gap-4">
+                <span className="font-bold text-rust">—</span>
+                <span>
+                  Often cut with starch or chalk powder to bulk up weight
+                </span>
+              </li>
+              <li className="flex gap-4">
+                <span className="font-bold text-rust">—</span>
+                <span>
+                  Machine-dried fast, which cooks off curcumin content
+                </span>
+              </li>
+              <li className="flex gap-4">
+                <span className="font-bold text-rust">—</span>
+                <span>
+                  Ground months before it reaches your kitchen, aroma long gone
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div className="bracket grid-bg rounded-3xl bg-ink p-10 text-beige">
+            <p className="eyebrow text-goldPale">✓ Nature's Golden Gift</p>
+            <ul className="mt-6 space-y-5 text-base leading-relaxed text-beige/85">
+              <li className="flex gap-4">
+                <span className="font-bold text-goldPale">→</span>
+                <span>
+                  Grown by partner farms without synthetic fertilizers or bleach
+                </span>
+              </li>
+              <li className="flex gap-4">
+                <span className="font-bold text-goldPale">→</span>
+                <span>
+                  Nothing added — what's in the pouch is only turmeric
+                </span>
+              </li>
+              <li className="flex gap-4">
+                <span className="font-bold text-goldPale">→</span>
+                <span>
+                  Sun-dried slowly over two weeks to preserve curcumin and oils
+                </span>
+              </li>
+              <li className="flex gap-4">
+                <span className="font-bold text-goldPale">→</span>
+                <span>
+                  Ground fresh in small batches, sealed within 48 hours
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </Section>
+      <Section className="stats-section py-0">
+        <div className="grid gap-5 md:grid-cols-3">
+          {[
+            ['15 Days', 'Slow sun-drying preserves oils.'],
+            ['0', 'Additives, fillers or bleaching agents.'],
+            ['48 Hrs', 'Grinding to airtight sealing.'],
+          ].map(([number, text]) => (
+            <div
+              className="bracket rounded-3xl border-2 border-ink/10 bg-beigeCard p-7"
+              key={number}
+            >
+              <p className="font-display text-4xl font-bold text-goldDeep">
+                {number}
+              </p>
+              <p className="mt-2 text-sm text-inkSoft">{text}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+      <section className="process-band grid-bg bg-ink text-beige">
+        <div className="container-shell py-20 md:py-28">
+          <p className="eyebrow text-goldPale">From Root To Jar</p>
+          <h2 className="section-title max-w-xl">
+            Four steps, nothing skipped — most mass-market turmeric compresses
+            this into one.
+          </h2>
+          <div className="process-steps relative mt-16 grid gap-10 md:grid-cols-4">
+            <div className="process-rule hidden md:block" />
+            {[
+              [
+                '01',
+                'Hand-harvested',
+                'Picked by partner farms once the rhizomes reach full maturity.',
+              ],
+              [
+                '02',
+                'Sun-dried, 15 days',
+                'Slow natural drying preserves oils and curcumin content.',
+              ],
+              [
+                '03',
+                'Stone-ground fresh',
+                'Ground in small batches to avoid heat damage from fast milling.',
+              ],
+              [
+                '04',
+                'Sealed in 48 hours',
+                'Packed airtight before aroma and potency can fade.',
+              ],
+            ].map(([number, title, text]) => (
+              <article className="relative" key={number}>
+                <p className="relative z-10 font-mono text-sm font-bold text-goldPale">
+                  {number}
+                </p>
+                <h3 className="mt-5 font-display text-xl font-semibold">
+                  {title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-beige/60">
+                  {text}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      <Section className="bg-ink text-beige">
+        <p className="eyebrow text-goldPale">Shop the collection</p>
+        <h2 className="section-title">
+          Same single-origin batch, three ways to bring it home.
+        </h2>
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {products.map((product) => (
+            <ProductCard key={product.slug} product={product} />
+          ))}
+        </div>
+        <Link
+          to="/shop"
+          className="btn-ghost mt-10 inline-block rounded-full border-2 border-beige/30 px-6 py-3 font-bold"
+        >
+          View the full shop →
+        </Link>
+      </Section>
+      <Section>
+        <p className="eyebrow">From kitchens like yours</p>
+        <h2 className="section-title max-w-2xl">
+          Sample placeholder quotes, ready to be replaced by real reviews.
+        </h2>
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {testimonials.map(([quote, author]) => (
+            <blockquote
+              key={author}
+              className="bracket rounded-3xl border-2 border-ink/10 bg-cream p-7"
+            >
+              <p className="font-display text-lg italic leading-snug">
+                “{quote}”
+              </p>
+              <cite className="mt-6 block font-mono text-[10px] uppercase tracking-widest text-inkSoft">
+                {author}
+              </cite>
+            </blockquote>
+          ))}
+        </div>
+      </Section>
+      <Section className="pt-0">
+        <div className="grid gap-8 rounded-[2rem] bg-gradient-to-br from-goldDeep to-rust p-8 text-beige md:grid-cols-2 md:p-14">
+          <div>
+            <h2 className="font-display text-4xl font-semibold">
+              Get 10% off your first order.
+            </h2>
+            <p className="mt-3 text-beige/80">
+              No spam, just a code and occasional restock notes.
+            </p>
+          </div>
+          <NewsletterForm />
+        </div>
+      </Section>
+    </>
+  );
+}

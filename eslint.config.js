@@ -6,10 +6,12 @@ import globals from 'globals';
 export default [
   { ignores: ['**/dist/**', '**/node_modules/**', 'plan.tmp.txt'] },
   js.configs.recommended,
-  { files: ['apps/storefront/**/*.jsx'], rules: { 'react/no-unescaped-entities': 'off' } },
   {
     files: ['apps/**/*.js', 'apps/**/*.jsx'],
-    languageOptions: { globals: { ...globals.browser, ...globals.node }, parserOptions: { ecmaFeatures: { jsx: true } } },
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.node },
+      parserOptions: { ecmaFeatures: { jsx: true } },
+    },
     plugins: { react, 'react-hooks': reactHooks },
     settings: { react: { version: 'detect' } },
     rules: {
@@ -17,12 +19,16 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn'
-    }
+      'react-hooks/exhaustive-deps': 'warn',
+    },
+  },
+  {
+    files: ['apps/storefront/**/*.jsx'],
+    rules: { 'react/no-unescaped-entities': 'off' },
   },
   {
     files: ['server/**/*.js', 'packages/**/*.js'],
     languageOptions: { globals: globals.node, sourceType: 'module' },
-    rules: { 'no-console': 'off' }
-  }
+    rules: { 'no-console': 'off' },
+  },
 ];

@@ -7,7 +7,9 @@ let server;
 
 async function start() {
   await connectDb();
-  server = app.listen(env.PORT, () => logger.info({ port: env.PORT }, 'server started'));
+  server = app.listen(env.PORT, () =>
+    logger.info({ port: env.PORT }, 'server started'),
+  );
 }
 
 async function shutdown(signal) {
