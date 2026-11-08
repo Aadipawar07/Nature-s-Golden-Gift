@@ -1,22 +1,28 @@
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { benefits, products } from '../data/placeholders';
 import { useCart } from '../context/CartContext';
 import StickyBuyBar from '../components/layout/StickyBuyBar';
+import ProductImage from '../components/product/ProductImage';
+import PriceDisplay from '../components/product/PriceDisplay';
+import NotFound from './NotFound';
 export default function ProductDetail() {
   const { slug } = useParams();
-  const product = products.find((item) => item.slug === slug) || products[1];
+  const product = products.find((item) => item.slug === slug);
   const { addToCart } = useCart();
+  const [selectedSize, setSelectedSize] = useState(product?.size);
+  if (!product) return <NotFound />;
   return (
     <>
       <section className="container-shell py-20 md:py-28">
         <div className="grid items-center gap-14 lg:grid-cols-2">
-          <div className="grid min-h-[420px] place-items-center rounded-[2rem] bg-beigeCard">
-            <div className="pouch scale-125">
-              <span className="pouch-label">
-                Nature's <em>Golden</em> Gift
-                <small>{product.size} turmeric powder</small>
-              </span>
-            </div>
+          <div className="overflow-hidden rounded-xl bg-cream-200">
+            <ProductImage
+              src={product.images[0]}
+              alt={product.name}
+              aspect="1 / 1"
+              priority
+            />
           </div>
           <div>
             <p className="eyebrow text-emerald">
@@ -26,20 +32,17 @@ export default function ProductDetail() {
               {product.name}
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-inkSoft">
-              {product.description} Freshly ground, aromatic, and nothing but
-              turmeric.
+              {product.description}
             </p>
             <div className="mt-8 flex items-baseline gap-3">
-              <span className="font-display text-4xl font-bold">
-                ₹{product.price}
-              </span>
-              <del className="text-inkSoft/60">₹{product.mrp}</del>
+              <PriceDisplay price={product.price} mrp={product.mrp} />
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               {['100g', '200g', '500g'].map((variant) => (
                 <button
                   key={variant}
-                  className={`rounded-full border-2 px-5 py-3 font-mono text-xs ${variant === product.size ? 'border-goldDeep bg-goldDeep text-beige' : 'border-ink/20'}`}
+                  onClick={() => setSelectedSize(variant)}
+                  className={`rounded-full border-2 px-5 py-3 font-mono text-xs ${variant === selectedSize ? 'border-goldDeep bg-goldDeep text-beige' : 'border-ink/20'}`}
                 >
                   {variant}
                 </button>

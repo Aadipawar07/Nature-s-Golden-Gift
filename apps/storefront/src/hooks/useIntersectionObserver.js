@@ -19,6 +19,6 @@ export function useIntersectionObserver(options = {}) {
     );
     observer.observe(element);
     return () => observer.disconnect();
-  }, [options]);
+  }, [options.threshold, options.root, options.rootMargin]);
   return ref;
 }

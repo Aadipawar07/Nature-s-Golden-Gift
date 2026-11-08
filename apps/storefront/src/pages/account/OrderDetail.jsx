@@ -1,1 +1,4 @@
-// TODO: Customer account order detail page.
+import ComingSoon from '../../components/ComingSoon';
+export default function OrderDetail() {
+  return <ComingSoon title="Order details" />;
+}

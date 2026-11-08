@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCart } from '../../context/CartContext';
+import PriceDisplay from '../product/PriceDisplay';
 
 export default function StickyBuyBar({ product }) {
   const { addToCart } = useCart();
@@ -16,11 +17,11 @@ export default function StickyBuyBar({ product }) {
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="font-display font-semibold">{product.name}</p>
-          <p className="font-mono text-xs text-inkSoft">₹{product.price}</p>
+          <PriceDisplay price={product.price} />
         </div>
         <button
           onClick={() => addToCart(product)}
-          className="btn-primary rounded-full px-5 py-3 text-sm font-bold text-beige"
+          className="btn-primary rounded-full px-5 py-3 text-sm font-bold"
         >
           Add to cart
         </button>

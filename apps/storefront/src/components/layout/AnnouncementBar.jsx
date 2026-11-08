@@ -1,9 +1,10 @@
+import site from '../../config/site';
+
 export default function AnnouncementBar() {
+  if (!site.announcementMessage) return null;
   return (
-    <div className="fixed inset-x-0 top-0 z-50 h-10 bg-ink py-2 text-center font-mono text-[10px] font-semibold tracking-[.08em] text-beige">
-      Free shipping above ₹499 <span className="px-3 text-goldPale">·</span>{' '}
-      Dispatched within 24 hours <span className="px-3 text-goldPale">·</span>{' '}
-      <span className="text-goldPale">Batch #014 — sun-dried Aug 2026</span>
+    <div className="bg-ink-900 py-2 text-center text-xs text-cream-50">
+      {site.announcementMessage}
     </div>
   );
 }

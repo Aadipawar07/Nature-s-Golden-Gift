@@ -1,3 +1,4 @@
+import site from '../config/site';
 export default function Contact() {
   return (
     <section className="container-shell grid gap-12 py-20 md:py-28 lg:grid-cols-2">
@@ -8,31 +9,17 @@ export default function Contact() {
           Questions about a batch, your order, or bringing Nature's Golden Gift
           to your kitchen? Write to us.
         </p>
-        <div className="mt-8 space-y-3 font-mono text-sm text-inkSoft">
-          <p>hello@naturesgoldengift.in</p>
-          <p>Mon–Sat · 10:00–18:00 IST</p>
+        <div className="mt-8 space-y-3 text-sm text-ink-500">
+          {site.supportEmail && <p>{site.supportEmail}</p>}
+          {site.supportPhone && <p>{site.supportPhone}</p>}
+          {site.supportHours && <p>{site.supportHours}</p>}
         </div>
       </div>
-      <form
-        className="rounded-3xl border-2 border-ink/10 bg-beigeCard p-7"
-        onSubmit={(event) => event.preventDefault()}
-      >
-        <label className="mb-4 block text-sm font-semibold">
-          Your name
-          <input className="form-control mt-2" required />
-        </label>
-        <label className="mb-4 block text-sm font-semibold">
-          Email
-          <input className="form-control mt-2" type="email" required />
-        </label>
-        <label className="mb-4 block text-sm font-semibold">
-          Message
-          <textarea className="form-control mt-2 min-h-32" required />
-        </label>
-        <button className="btn-primary rounded-full px-7 py-3 font-bold text-beige">
-          Send message
-        </button>
-      </form>
+      <div className="rounded-xl border border-cream-300 bg-cream-100 p-7 text-ink-500">
+        <p>
+          Support details will be added when the owner configuration is ready.
+        </p>
+      </div>
     </section>
   );
 }

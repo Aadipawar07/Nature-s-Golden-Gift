@@ -1,1 +1,4 @@
-// TODO: Customer login page.
+import ComingSoon from '../components/ComingSoon';
+export default function Login() {
+  return <ComingSoon title="Sign in" />;
+}

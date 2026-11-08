@@ -14,19 +14,16 @@ export default function About() {
             with?
           </p>
           <p>
-            We work with partner farms, follow the harvest closely, and keep the
-            chain short. That means fewer shortcuts between soil, stone, pouch,
-            and your kitchen.
+            We are preparing the story behind this pantry staple. More details
+            will be added when the owner-supplied content is ready.
           </p>
         </div>
       </section>
       <section className="bg-ink py-20 text-beige md:py-28">
         <div className="container-shell">
           <p className="eyebrow text-goldPale">From root to jar</p>
-          <h2 className="section-title max-w-xl">
-            Four steps, nothing skipped.
-          </h2>
-          <div className="mt-14 grid gap-8 md:grid-cols-4">
+          <h2 className="section-title max-w-xl">From root to pantry.</h2>
+          <div className="mt-14 grid gap-8 md:grid-cols-5">
             {processSteps.map(([number, title, text]) => (
               <article key={number}>
                 <p className="font-mono text-goldPale">{number}</p>

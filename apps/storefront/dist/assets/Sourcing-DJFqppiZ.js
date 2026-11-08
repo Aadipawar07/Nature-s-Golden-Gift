@@ -1,0 +1,1 @@
+import e from"./DraftPage-BQ1LSyBf.js";import{t}from"./jsx-runtime-BZi9cxqW.js";var n=t();function r(){return(0,n.jsx)(e,{title:`Sourcing`,ownerInput:`sourcing story and region (OI-001)`})}export{r as default};

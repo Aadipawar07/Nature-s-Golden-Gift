@@ -1,1 +1,4 @@
-// TODO: Customer account dashboard page.
+import ComingSoon from '../../components/ComingSoon';
+export default function Dashboard() {
+  return <ComingSoon title="Your account" />;
+}

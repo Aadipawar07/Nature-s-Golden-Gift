@@ -38,15 +38,24 @@ export default function Checkout() {
               <input className="form-control" placeholder="City" required />
               <input className="form-control" placeholder="PIN code" required />
             </div>
-            <button className="btn-primary mt-7 rounded-full px-7 py-3 font-bold text-beige">
-              Place order
+            <button
+              disabled
+              className="mt-7 cursor-not-allowed rounded-full bg-cream-300 px-7 py-3 font-bold text-ink-500"
+            >
+              Online payment opens at launch
             </button>
           </form>
           <aside className="h-fit rounded-3xl bg-ink p-7 text-beige">
             <p className="font-mono text-xs uppercase tracking-widest text-goldPale">
               Order total
             </p>
-            <p className="mt-5 font-display text-4xl font-bold">₹{total}</p>
+            <p className="mt-5 font-display text-4xl font-bold">
+              {new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 0,
+              }).format(total / 100)}
+            </p>
             <p className="mt-3 text-sm text-beige/60">
               Payment integration will be connected in a later step.
             </p>

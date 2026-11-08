@@ -1,1 +1,0 @@
-// TODO: Shared badge component.
