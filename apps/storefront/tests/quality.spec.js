@@ -33,6 +33,7 @@ for (const route of routes) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(route);
       await expect(page.locator('main')).toBeVisible();
+      await expect(page.locator('main h1')).toBeVisible();
       const results = await new AxeBuilder({ page }).analyze();
       expect(
         results.violations,
