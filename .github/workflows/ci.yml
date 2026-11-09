@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm test
+      - run: npm run build
+      - run: npm audit --omit=dev --audit-level=high
+      - run: bash scripts/secret-grep.sh
+      - run: bash scripts/secret-grep.sh --self-test
+      - run: npm run size
+        working-directory: apps/storefront
+  storefront-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+        working-directory: apps/storefront
+      - run: npm run test:quality
+        working-directory: apps/storefront
+      - run: npm run lighthouse
+        working-directory: apps/storefront

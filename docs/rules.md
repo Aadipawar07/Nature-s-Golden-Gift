@@ -38,12 +38,14 @@ Things to always do, and things to never do, while building this project. Read t
 - Do not add product weight/dimensions as an afterthought — Shiprocket needs accurate weight per variant to quote courier rates correctly; missing this breaks shipment creation.
 
 ## 5. Coding conventions
+
 - One Mongoose model per file, matching the schema in `architecture.md`.
 - Keep external API calls (Razorpay, Shiprocket) inside `/services`, never inline in route handlers — makes it easier to mock/test and to swap providers later if needed.
 - Every backend route that mutates data validates that the resource belongs to the requesting user (or that the requester is an admin) before acting on it.
 - Log raw incoming webhook payloads to their own collection before processing, so a bad event can always be replayed/debugged.
 
 ## 6. Marketing/compliance reminders (not code, but easy to forget)
+
 - Meta Pixel must be installed and firing correctly before any ad spend begins.
 - "100% Organic" as marketing language is fine; if the pack ever claims certified organic status, that requires actual NPOP/India Organic certification — don't let copy get ahead of paperwork.
 - GST-compliant invoices need sequential numbering with no gaps — use an atomic counter collection, not `Order.count()`.

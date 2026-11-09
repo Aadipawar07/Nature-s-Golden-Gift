@@ -1,0 +1,85 @@
+:root {
+  --gold-50: #fffbf0;
+  --gold-100: #fdf2d8;
+  --gold-200: #fae3ae;
+  --gold-300: #f6d07c;
+  --gold-400: #f0bc4e;
+  --gold-500: #e5a72c;
+  --gold-600: #c8871a;
+  --gold-700: #a56b12;
+  --gold-800: #7d4f0e;
+  --cream-50: #fffdf8;
+  --cream-100: #fdf9f0;
+  --cream-200: #f9f2e4;
+  --cream-300: #f2e8d5;
+  --cream-400: #e6d8be;
+  --cream-footer: #f6efe2;
+  --ink-900: #2b2318;
+  --ink-700: #4a3f2e;
+  --ink-500: #7a6c56;
+  --ink-400: #9c8f79;
+  --leaf-100: #e8f1e4;
+  --leaf-500: #5c8a4a;
+  --leaf-700: #3f6431;
+  --warning-bg: #fdf2d8;
+  --warning-fg: #8a5a0b;
+  --error-bg: #fbe9e7;
+  --error-fg: #a3342a;
+  --info-bg: #eaf0f6;
+  --info-fg: #2f5578;
+  --border-subtle: var(--cream-300);
+  --border-strong: var(--cream-400);
+  --focus-ring: #1f6feb;
+  --gradient-cta: linear-gradient(135deg, #f0bc4e, #e09520);
+  --gradient-cream: linear-gradient(180deg, #fffdf8, #f9f2e4);
+  --gradient-glass: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 253, 248, 0.55)
+  );
+  --gradient-hero-bloom: radial-gradient(
+    60% 60% at 62% 45%,
+    rgba(240, 188, 78, 0.38) 0%,
+    rgba(240, 188, 78, 0) 70%
+  );
+  --glow-cta:
+    0 6px 20px rgba(224, 149, 32, 0.32), inset 0 0 0 1px rgba(240, 188, 78, 0.4);
+  --glow-cta-hover:
+    0 10px 30px rgba(224, 149, 32, 0.42), 0 0 28px rgba(240, 188, 78, 0.36);
+  --shadow-sm: 0 2px 6px rgba(43, 35, 24, 0.06);
+  --shadow-md: 0 6px 18px rgba(43, 35, 24, 0.08);
+  --shadow-lg: 0 14px 40px rgba(43, 35, 24, 0.1);
+  --shadow-card-hover: 0 18px 46px rgba(43, 35, 24, 0.13);
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 999px;
+  --container: 1280px;
+  --side-padding: clamp(16px, 4vw, 48px);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 180ms;
+  --duration-normal: 240ms;
+  --duration-slow: 520ms;
+  --z-sticky: 100;
+  --z-nav: 200;
+  --z-drawer: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+@font-face {
+  font-family: Fraunces;
+  src: url('@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2')
+    format('woff2');
+  font-display: swap;
+  font-weight: 100 900;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('@fontsource-variable/inter/files/inter-latin-wght-normal.woff2')
+    format('woff2');
+  font-display: swap;
+  font-weight: 100 900;
+}
