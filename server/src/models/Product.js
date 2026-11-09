@@ -9,7 +9,12 @@ const variantSchema = new mongoose.Schema(
     mrp: { type: Number, required: true, min: 0, validate: Number.isInteger },
     stock: { type: Number, required: true, min: 0, validate: Number.isInteger },
     reserved: { type: Number, default: 0, min: 0, validate: Number.isInteger },
-    lowStockThreshold: { type: Number, required: true, min: 0, validate: Number.isInteger },
+    lowStockThreshold: {
+      type: Number,
+      required: true,
+      min: 0,
+      validate: Number.isInteger,
+    },
     shippingWeightGrams: { type: Number, required: true, min: 1 },
     dimensionsCm: {
       length: { type: Number, required: true, min: 0 },
@@ -32,7 +37,11 @@ const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     slug: { type: String, required: true, trim: true },
-    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      required: true,
+    },
     shortDescription: { type: String, required: true },
     description: { type: String, required: true },
     images: [

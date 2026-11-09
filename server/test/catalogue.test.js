@@ -66,16 +66,29 @@ afterAll(async () => {
 describe('catalogue API', () => {
   it('lists, filters, sorts, and paginates active products', async () => {
     await Product.create([
-      makeProduct({ slug: 'first', variants: [{ ...makeProduct().variants[0], sku: 'TP-1' }], soldCount: 2 }),
+      makeProduct({
+        slug: 'first',
+        variants: [{ ...makeProduct().variants[0], sku: 'TP-1' }],
+        soldCount: 2,
+      }),
       makeProduct({
         slug: 'second',
         isFeatured: true,
         soldCount: 8,
         variants: [
-          { ...makeProduct().variants[0], sku: 'TP-2', price: 24900, mrp: 29900 },
+          {
+            ...makeProduct().variants[0],
+            sku: 'TP-2',
+            price: 24900,
+            mrp: 29900,
+          },
         ],
       }),
-      makeProduct({ slug: 'inactive', isActive: false, variants: [{ ...makeProduct().variants[0], sku: 'TP-3' }] }),
+      makeProduct({
+        slug: 'inactive',
+        isActive: false,
+        variants: [{ ...makeProduct().variants[0], sku: 'TP-3' }],
+      }),
     ]);
 
     const response = await request(app)
@@ -96,7 +109,9 @@ describe('catalogue API', () => {
         variants: [{ ...makeProduct().variants[0], sku: 'TP-LOW', stock: 2 }],
       }),
     );
-    const response = await request(app).get('/api/products/turmeric-powder').expect(200);
+    const response = await request(app)
+      .get('/api/products/turmeric-powder')
+      .expect(200);
     expect(response.body.data.variants[0]).toMatchObject({
       label: '100g',
       stockStatus: 'LOW_STOCK',
@@ -120,7 +135,9 @@ describe('catalogue API', () => {
 
   it('enforces unique product slugs and variant SKUs', async () => {
     await Product.create(makeProduct());
-    await expect(Product.create(makeProduct())).rejects.toMatchObject({ code: 11000 });
+    await expect(Product.create(makeProduct())).rejects.toMatchObject({
+      code: 11000,
+    });
     await expect(
       Product.create(makeProduct({ slug: 'other' })),
     ).rejects.toMatchObject({ code: 11000 });

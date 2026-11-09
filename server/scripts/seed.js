@@ -79,7 +79,9 @@ async function seed() {
       shortDescription: 'A pantry staple for everyday cooking.',
       description:
         'Warm colour and familiar flavour for curries, rice, and vegetables.',
-      images: [{ url: 'placeholder://turmeric-powder', alt: 'Turmeric Powder' }],
+      images: [
+        { url: 'placeholder://turmeric-powder', alt: 'Turmeric Powder' },
+      ],
       variants,
       origin: { region: null },
       certifications: [],

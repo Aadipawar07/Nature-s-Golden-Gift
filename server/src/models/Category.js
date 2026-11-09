@@ -8,7 +8,11 @@ const categorySchema = new mongoose.Schema(
       url: { type: String, required: true },
       alt: { type: String, required: true },
     },
-    parent: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', default: null },
+    parent: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      default: null,
+    },
     displayOrder: { type: Number, default: 0 },
     isActive: { type: Boolean, default: true },
   },
