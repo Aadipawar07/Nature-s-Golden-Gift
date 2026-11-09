@@ -1,7 +1,6 @@
 .env
 node_modules/
-/frontend/dist
-/backend/dist
+dist/
 *.log
 .DS_Store
 coverage/

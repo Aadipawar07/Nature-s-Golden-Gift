@@ -1,1 +1,0 @@
-import{t as e}from"./ComingSoon-CmVQRgIs.js";import{t}from"./jsx-runtime-BZi9cxqW.js";var n=t();function r(){return(0,n.jsx)(e,{title:`Reset password`})}export{r as default};

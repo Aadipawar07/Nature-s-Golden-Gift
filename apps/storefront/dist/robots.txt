@@ -1,3 +1,0 @@
-# TODO: remove at launch (PH-12)
-User-agent: *
-Disallow: /
