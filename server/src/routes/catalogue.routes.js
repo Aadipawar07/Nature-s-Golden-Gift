@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { productQuerySchema } from '@ngg/shared';
+import { productQuerySchema } from '@ngg/shared/catalogue';
 import { validate } from '../middleware/validate.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import {

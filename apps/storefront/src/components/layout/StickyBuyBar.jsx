@@ -17,10 +17,14 @@ export default function StickyBuyBar({ product }) {
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="font-display font-semibold">{product.name}</p>
-          <PriceDisplay price={product.price} />
+          <PriceDisplay
+            price={product.variants?.[0]?.price ?? product.price}
+            mrp={product.variants?.[0]?.mrp ?? product.mrp}
+          />
         </div>
         <button
-          onClick={() => addToCart(product)}
+          onClick={() => addToCart(product, product.variants?.[0])}
+          disabled={product.variants?.[0]?.stockStatus === 'OUT_OF_STOCK'}
           className="btn-primary rounded-full px-5 py-3 text-sm font-bold"
         >
           Add to cart

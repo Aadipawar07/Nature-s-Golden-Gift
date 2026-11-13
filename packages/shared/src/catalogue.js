@@ -49,7 +49,8 @@ export const productSchema = z.object({
   benefits: z
     .array(z.string())
     .refine(
-      (benefits) => benefits.every((benefit) => !bannedBenefitsPattern.test(benefit)),
+      (benefits) =>
+        benefits.every((benefit) => !bannedBenefitsPattern.test(benefit)),
       'benefits must use culinary wording',
     ),
   tags: z.array(z.string()).default([]),

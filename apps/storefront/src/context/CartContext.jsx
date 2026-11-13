@@ -5,7 +5,10 @@ const CartContext = createContext(null);
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
 
-  function addToCart(product, variant = product.size) {
+  function addToCart(product, selectedVariant = product.variants?.[0]) {
+    const variant = selectedVariant?.label || selectedVariant || product.size;
+    const price = selectedVariant?.price ?? product.price;
+    const mrp = selectedVariant?.mrp ?? product.mrp;
     setItems((current) => {
       const existing = current.find(
         (item) => item.slug === product.slug && item.variant === variant,
@@ -14,7 +17,10 @@ export function CartProvider({ children }) {
         return current.map((item) =>
           item === existing ? { ...item, quantity: item.quantity + 1 } : item,
         );
-      return [...current, { ...product, variant, quantity: 1 }];
+      return [
+        ...current,
+        { ...product, variant, price, mrp, size: variant, quantity: 1 },
+      ];
     });
   }
 

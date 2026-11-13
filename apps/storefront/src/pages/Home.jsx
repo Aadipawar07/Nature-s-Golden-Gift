@@ -1,10 +1,21 @@
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { benefits, processSteps, products } from '../data/placeholders';
+import { listProducts } from '../api/products';
 import site from '../config/site';
 import ProductImage from '../components/product/ProductImage';
 import ProductCard from '../components/product/ProductCard';
+import Skeleton from '../components/ui/Skeleton';
+import useApi from '../hooks/useApi';
 
 export default function Home() {
+  const request = useCallback(
+    () => listProducts({ isFeatured: true, limit: 3 }),
+    [],
+  );
+  const { data, loading } = useApi(request);
+  const products = data?.data || [];
+  const heroImage = products[0]?.images?.[0];
+
   return (
     <>
       <section className="bg-cream-100 py-20 md:py-32">
@@ -27,8 +38,8 @@ export default function Home() {
           </div>
           <div className="rounded-xl bg-cream-200 p-6 shadow-md">
             <ProductImage
-              src={products[0].images[0]}
-              alt="Turmeric product placeholder"
+              src={heroImage?.url}
+              alt={heroImage?.alt || 'Turmeric product'}
               aspect="1 / 1"
               priority
             />
@@ -41,7 +52,7 @@ export default function Home() {
           Simple ways to make it part of the day.
         </h2>
         <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {benefits.map(([title, text]) => (
+          {site.benefits.map(([title, text]) => (
             <article
               key={title}
               className="rounded-xl border border-cream-300 bg-cream-50 p-6 shadow-sm"
@@ -57,7 +68,7 @@ export default function Home() {
           <p className="eyebrow text-gold-400">Our process</p>
           <h2 className="section-title">From root to pantry.</h2>
           <div className="mt-10 grid gap-8 md:grid-cols-5">
-            {processSteps.map(([number, title, text]) => (
+            {site.processSteps.map(([number, title, text]) => (
               <article key={number}>
                 <p className="text-sm text-gold-400">{number}</p>
                 <h3 className="mt-3 font-display text-xl">{title}</h3>
@@ -70,11 +81,19 @@ export default function Home() {
       <section className="container-shell py-20">
         <p className="eyebrow">Featured</p>
         <h2 className="section-title">Choose your kitchen size.</h2>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {products.map((product) => (
-            <ProductCard key={product.slug} product={product} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {[1, 2, 3].map((item) => (
+              <Skeleton key={item} className="h-96" />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {products.map((product) => (
+              <ProductCard key={product.slug} product={product} />
+            ))}
+          </div>
+        )}
       </section>
     </>
   );

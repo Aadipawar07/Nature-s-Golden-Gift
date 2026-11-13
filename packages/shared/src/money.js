@@ -7,7 +7,9 @@ const INR = new Intl.NumberFormat('en-IN', {
 export function toPaise(rupees) {
   const value = Number(rupees);
   if (!Number.isFinite(value) || value < 0 || !Number.isInteger(value * 100)) {
-    throw new TypeError('Rupees must be a non-negative value with at most two decimals');
+    throw new TypeError(
+      'Rupees must be a non-negative value with at most two decimals',
+    );
   }
   return Math.round(value * 100);
 }

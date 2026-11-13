@@ -27,6 +27,56 @@ const routes = [
 ];
 const widths = [320, 375, 768, 1024, 1440];
 
+test.beforeEach(async ({ page }) => {
+  const variant = {
+    label: '100g',
+    weightGrams: 100,
+    price: 14900,
+    mrp: 19900,
+    stockStatus: 'IN_STOCK',
+  };
+  const product = {
+    id: 'e2e-product',
+    name: 'Starter Pouch',
+    slug: 'starter-pouch',
+    category: 'e2e-category',
+    shortDescription: 'A pantry staple',
+    description: 'Turmeric powder for everyday cooking.',
+    images: [{ url: '/images/turmeric-placeholder.jpg', alt: 'Turmeric' }],
+    variants: [
+      variant,
+      {
+        ...variant,
+        label: '200g',
+        weightGrams: 200,
+        price: 24900,
+        mrp: 29900,
+      },
+    ],
+    origin: { region: null },
+    certifications: [],
+    benefits: ['Everyday cooking'],
+    tags: [],
+    isFeatured: true,
+  };
+
+  await page.route('**/api/products**', async (route) => {
+    const url = new URL(route.request().url());
+    const slug = url.pathname.split('/').filter(Boolean).at(-1);
+    const data =
+      slug === 'products' ? [product] : slug === 'starter-pouch' ? product : [];
+    await route.fulfill({
+      status: slug === 'starter-pouch' ? 200 : 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        success: true,
+        data,
+        meta: { page: 1, limit: 24, total: 1, pages: 1 },
+      }),
+    });
+  });
+});
+
 for (const route of routes) {
   for (const width of widths) {
     test(`axe ${route} at ${width}px`, async ({ page }) => {

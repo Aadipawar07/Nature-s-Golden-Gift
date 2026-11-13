@@ -1,4 +1,4 @@
-import { processSteps } from '../data/placeholders';
+import site from '../config/site';
 export default function About() {
   return (
     <>
@@ -24,7 +24,7 @@ export default function About() {
           <p className="eyebrow text-goldPale">From root to jar</p>
           <h2 className="section-title max-w-xl">From root to pantry.</h2>
           <div className="mt-14 grid gap-8 md:grid-cols-5">
-            {processSteps.map(([number, title, text]) => (
+            {site.processSteps.map(([number, title, text]) => (
               <article key={number}>
                 <p className="font-mono text-goldPale">{number}</p>
                 <h3 className="mt-4 font-display text-xl font-semibold">

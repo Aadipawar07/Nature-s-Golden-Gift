@@ -5,13 +5,15 @@ import PriceDisplay from './PriceDisplay';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
+  const variant = product.variants?.[0];
+  if (!variant) return null;
   return (
     <article className="relative rounded-xl border border-cream-300 bg-cream-50 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-card-hover">
       <div className="mb-6 overflow-hidden rounded-lg bg-cream-200">
-        <ProductImage src={product.images[0]} alt="" aspect="4 / 3" />
+        <ProductImage src={product.images[0]?.url} alt="" aspect="4 / 3" />
       </div>
       <p className="mb-2 text-xs font-bold uppercase tracking-widest text-leaf-700">
-        {product.size} · {product.label}
+        {variant.label}
       </p>
       <Link to={`/product/${product.slug}`}>
         <h2 className="font-display text-xl font-semibold">{product.name}</h2>
@@ -21,12 +23,17 @@ export default function ProductCard({ product }) {
       </p>
       <div className="mb-5 flex items-center gap-2 text-xs text-leaf-700">
         <span className="h-2 w-2 rounded-full bg-leaf-500" />
-        In stock
+        {variant.stockStatus === 'LOW_STOCK'
+          ? 'Low stock'
+          : variant.stockStatus === 'OUT_OF_STOCK'
+            ? 'Out of stock'
+            : 'In stock'}
       </div>
       <div className="flex items-center justify-between">
-        <PriceDisplay price={product.price} mrp={product.mrp} />
+        <PriceDisplay price={variant.price} mrp={variant.mrp} />
         <button
-          onClick={() => addToCart(product)}
+          onClick={() => addToCart(product, variant)}
+          disabled={variant.stockStatus === 'OUT_OF_STOCK'}
           className="grid h-11 w-11 place-items-center rounded-full bg-ink-900 text-xl text-cream-50 transition-colors hover:bg-gold-700"
           aria-label={`Add ${product.name} to cart`}
         >

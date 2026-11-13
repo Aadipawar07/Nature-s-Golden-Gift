@@ -101,6 +101,9 @@ describe('catalogue API', () => {
     expect(response.body.data[0].variants[0]).not.toHaveProperty('stock');
     expect(response.body.data[0].variants[0]).not.toHaveProperty('reserved');
     expect(response.body.data[0].variants[0]).not.toHaveProperty('sku');
+    expect(JSON.stringify(response.body.data)).not.toMatch(
+      /"(stock|reserved|isActive)"\s*:/,
+    );
   });
 
   it('returns a public low-stock status and hides raw inventory fields', async () => {
