@@ -10,7 +10,8 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "test": "vitest run",
-    "seed": "node scripts/seed.js"
+    "seed": "node scripts/seed.js",
+    "seed:super-admin": "node scripts/seed-super-admin.js"
   },
   "dependencies": {
     "@ngg/shared": "*",
