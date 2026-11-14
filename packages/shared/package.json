@@ -6,6 +6,7 @@
   "main": "src/index.js",
   "exports": {
     ".": "./src/index.js",
+    "./account": "./src/account.js",
     "./money": "./src/money.js",
     "./catalogue": "./src/catalogue.js",
     "./status": "./src/status.js"
