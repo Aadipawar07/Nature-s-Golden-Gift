@@ -13,8 +13,8 @@ let servicesPromise;
 async function getFirebaseServices() {
   if (!servicesPromise) {
     servicesPromise = Promise.all([
-      import('firebase/app'),
-      import('firebase/auth'),
+      import('@firebase/app'),
+      import('@firebase/auth'),
     ]).then(([appSdk, authSdk]) => {
       if (
         !firebaseConfig.apiKey ||
