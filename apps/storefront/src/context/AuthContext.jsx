@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { SESSION_HINT_CHANGE_EVENT } from '../hooks/useSessionHint';
 import * as auth from '../lib/auth';
 
 const AuthContext = createContext(null);
@@ -22,6 +23,7 @@ export function AuthProvider({ children }) {
         } else {
           localStorage.removeItem('ngg.session');
         }
+        window.dispatchEvent(new Event(SESSION_HINT_CHANGE_EVENT));
       })
       .then((stop) => {
         if (active) unsubscribe = stop;

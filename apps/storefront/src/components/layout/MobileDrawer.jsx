@@ -6,10 +6,12 @@ const links = [
   ['/shop', 'Shop'],
   ['/about', 'About'],
   ['/contact', 'Contact'],
-  ['/account', 'Account'],
 ];
-export default function MobileDrawer() {
+export default function MobileDrawer({ isSignedIn }) {
   const [open, setOpen] = useState(false);
+  const accountLink = isSignedIn
+    ? ['/account', 'Account']
+    : ['/login', 'Login'];
   return (
     <>
       <button
@@ -22,7 +24,7 @@ export default function MobileDrawer() {
       </button>
       <Drawer open={open} onClose={() => setOpen(false)}>
         <nav aria-label="Mobile navigation" className="grid gap-2">
-          {links.map(([to, label]) => (
+          {[...links, accountLink].map(([to, label]) => (
             <NavLink
               key={to}
               to={to}

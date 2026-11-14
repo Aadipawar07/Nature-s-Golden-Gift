@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import useSessionHint from '../../hooks/useSessionHint';
 import MobileDrawer from './MobileDrawer';
 
 const links = [
@@ -10,6 +11,10 @@ const links = [
 ];
 export default function Navbar() {
   const { itemCount } = useCart();
+  const isSignedIn = useSessionHint();
+  const accountLink = isSignedIn
+    ? ['/account', 'Account']
+    : ['/login', 'Login'];
   return (
     <header className="sticky top-0 z-[var(--z-nav)] border-b border-cream-300 bg-cream-50/95 backdrop-blur-md">
       <div className="container-shell flex h-20 items-center justify-between gap-5">
@@ -25,7 +30,7 @@ export default function Navbar() {
           aria-label="Primary navigation"
           className="hidden items-center gap-7 text-sm font-semibold text-ink-700 md:flex"
         >
-          {links.map(([to, label]) => (
+          {[...links, accountLink].map(([to, label]) => (
             <NavLink
               key={to}
               to={to}
@@ -48,7 +53,7 @@ export default function Navbar() {
             {itemCount}
           </span>
         </Link>
-        <MobileDrawer />
+        <MobileDrawer isSignedIn={isSignedIn} />
       </div>
     </header>
   );
