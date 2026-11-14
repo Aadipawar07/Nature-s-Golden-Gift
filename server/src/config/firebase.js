@@ -1,4 +1,5 @@
 import { cert, getApps, initializeApp } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 import { env } from './env.js';
 
 export function getFirebaseApp() {
@@ -10,4 +11,8 @@ export function getFirebaseApp() {
       privateKey: env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
     }),
   });
+}
+
+export function verifyIdToken(token) {
+  return getAuth(getFirebaseApp()).verifyIdToken(token);
 }
