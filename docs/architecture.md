@@ -196,14 +196,14 @@ This keeps them visible to anyone opening the repo root (including an AI coding 
 | Endpoint                                 | Caller                                     | Purpose                                                                            |
 | ---------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------- |
 | `POST /api/auth/sync`                    | Frontend                                   | Verify Firebase ID token and synchronize the MongoDB customer profile              |
-| `GET /api/auth/me`                       | Authenticated customer                     | Read the current profile                                                          |
-| `PATCH /api/auth/me`                     | Authenticated customer                     | Update the current profile (name and phone only)                                  |
-| `GET /api/addresses`                     | Authenticated customer                     | List the current customer's active addresses                                     |
-| `POST /api/addresses`                    | Authenticated customer                     | Create an address                                                                 |
-| `PATCH /api/addresses/:id`               | Authenticated customer                     | Update an owned address                                                          |
-| `DELETE /api/addresses/:id`               | Authenticated customer                     | Soft-delete an owned address                                                     |
-| `POST /api/addresses/:id/default`         | Authenticated customer                     | Set an owned address as default                                                  |
-| `GET /api/admin/ping`                    | Admin or super-admin                       | Verify that MongoDB-backed role authorization is enforced                        |
+| `GET /api/auth/me`                       | Authenticated customer                     | Read the current profile                                                           |
+| `PATCH /api/auth/me`                     | Authenticated customer                     | Update the current profile (name and phone only)                                   |
+| `GET /api/addresses`                     | Authenticated customer                     | List the current customer's active addresses                                       |
+| `POST /api/addresses`                    | Authenticated customer                     | Create an address                                                                  |
+| `PATCH /api/addresses/:id`               | Authenticated customer                     | Update an owned address                                                            |
+| `DELETE /api/addresses/:id`              | Authenticated customer                     | Soft-delete an owned address                                                       |
+| `POST /api/addresses/:id/default`        | Authenticated customer                     | Set an owned address as default                                                    |
+| `GET /api/admin/ping`                    | Admin or super-admin                       | Verify that MongoDB-backed role authorization is enforced                          |
 | `GET /api/products`                      | Frontend                                   | List product + variants                                                            |
 | `POST /api/orders`                       | Frontend, at checkout                      | Create Order, status `PENDING_PAYMENT`, server-calculated total                    |
 | `POST /api/payments/create-order`        | Frontend                                   | Calls Razorpay Orders API using DB amount, returns `razorpay_order_id`             |
