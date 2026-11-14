@@ -10,6 +10,7 @@ describe('environment validation', () => {
     const result = spawnSync(process.execPath, ['-e', `import(${source})`], {
       env: {
         ...process.env,
+        NGG_DISABLE_DOTENV: 'true',
         NODE_ENV: 'development',
         PORT: '5000',
         MONGODB_URI: 'mongodb://placeholder',
@@ -27,6 +28,7 @@ describe('environment validation', () => {
     const result = spawnSync(process.execPath, ['-e', `import(${source})`], {
       env: {
         ...process.env,
+        NGG_DISABLE_DOTENV: 'true',
         NODE_ENV: 'production',
         PORT: '5000',
         MONGODB_URI: 'mongodb://secret-value',

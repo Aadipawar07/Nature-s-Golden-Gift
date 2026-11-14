@@ -1,7 +1,12 @@
 import dotenv from 'dotenv';
 import { z } from 'zod';
 
-dotenv.config();
+if (
+  process.env.NODE_ENV !== 'test' &&
+  process.env.NGG_DISABLE_DOTENV !== 'true'
+) {
+  dotenv.config();
+}
 
 const providerKeys = [
   'FIREBASE_PROJECT_ID',
