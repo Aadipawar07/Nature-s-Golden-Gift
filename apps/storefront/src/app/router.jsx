@@ -15,6 +15,9 @@ const Dashboard = lazy(() => import('../pages/account/Dashboard'));
 const Orders = lazy(() => import('../pages/account/Orders'));
 const OrderDetail = lazy(() => import('../pages/account/OrderDetail'));
 const TrackOrder = lazy(() => import('../pages/account/TrackOrder'));
+const AccountLayout = lazy(() => import('../pages/account/AccountLayout'));
+const Profile = lazy(() => import('../pages/account/Profile'));
+const Addresses = lazy(() => import('../pages/account/Addresses'));
 const About = lazy(() => import('../pages/About'));
 const Contact = lazy(() => import('../pages/Contact'));
 const FAQ = lazy(() => import('../pages/FAQ'));
@@ -34,6 +37,8 @@ export const routePaths = [
   '/register',
   '/forgot-password',
   '/account',
+  '/account/profile',
+  '/account/addresses',
   '/account/orders',
   '/account/orders/demo',
   '/account/orders/demo/track',
@@ -71,10 +76,14 @@ export default function AppRouter() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/account" element={<Dashboard />} />
-            <Route path="/account/orders" element={<Orders />} />
-            <Route path="/account/orders/:id" element={<OrderDetail />} />
-            <Route path="/account/orders/:id/track" element={<TrackOrder />} />
+            <Route path="/account" element={<AccountLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="addresses" element={<Addresses />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="orders/:id" element={<OrderDetail />} />
+              <Route path="orders/:id/track" element={<TrackOrder />} />
+            </Route>
           </Route>
           <Route path="/about" element={<About />} />
           <Route path="/sourcing" element={<Sourcing />} />
