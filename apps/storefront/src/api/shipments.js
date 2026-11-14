@@ -1,1 +1,0 @@
-// TODO: Shipment API resource.

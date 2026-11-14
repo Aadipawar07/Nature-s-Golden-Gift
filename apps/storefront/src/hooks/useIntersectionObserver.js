@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 
 export function useIntersectionObserver(options = {}) {
   const ref = useRef(null);
+  const { threshold = 0.15, root, rootMargin } = options;
   useEffect(() => {
     const element = ref.current;
     if (!element || !('IntersectionObserver' in window)) {
@@ -15,10 +16,10 @@ export function useIntersectionObserver(options = {}) {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.15, ...options },
+      { threshold, root, rootMargin },
     );
     observer.observe(element);
     return () => observer.disconnect();
-  }, [options.threshold, options.root, options.rootMargin]);
+  }, [root, rootMargin, threshold]);
   return ref;
 }

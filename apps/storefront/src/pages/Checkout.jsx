@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import PriceDisplay from '../components/product/PriceDisplay';
 export default function Checkout() {
   const { total, items } = useCart();
   return (
@@ -50,11 +51,7 @@ export default function Checkout() {
               Order total
             </p>
             <p className="mt-5 font-display text-4xl font-bold">
-              {new Intl.NumberFormat('en-IN', {
-                style: 'currency',
-                currency: 'INR',
-                maximumFractionDigits: 0,
-              }).format(total / 100)}
+              <PriceDisplay price={total} />
             </p>
             <p className="mt-3 text-sm text-beige/60">
               Payment integration will be connected in a later step.

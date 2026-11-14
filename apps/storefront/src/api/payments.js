@@ -1,1 +1,0 @@
-// TODO: Payment API resource.

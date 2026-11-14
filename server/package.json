@@ -9,9 +9,12 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "seed": "node scripts/seed.js",
+    "seed:super-admin": "node scripts/seed-super-admin.js"
   },
   "dependencies": {
+    "@ngg/shared": "*",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -24,5 +27,8 @@
     "pino-http": "^11.0.0",
     "razorpay": "^2.9.6",
     "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^11.3.0"
   }
 }
