@@ -36,7 +36,17 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
         working-directory: apps/storefront
-      - run: npm run test:quality
+      - run: npm run test
+        working-directory: apps/storefront
+      - run: npm run build
+        working-directory: apps/storefront
+      - run: npm run check:production-auth
+        working-directory: apps/storefront
+      - run: npm run build:e2e
+        working-directory: apps/storefront
+      - run: npm run test:e2e
+        working-directory: apps/storefront
+      - run: npm run build
         working-directory: apps/storefront
       - run: npm run lighthouse
         working-directory: apps/storefront

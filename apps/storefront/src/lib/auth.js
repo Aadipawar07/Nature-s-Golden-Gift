@@ -45,7 +45,7 @@ export async function getIdToken() {
 }
 
 async function syncSignedInUser(user) {
-  await syncAuthUser();
+  await syncAuthUser(user.displayName);
   return user;
 }
 
@@ -67,7 +67,7 @@ export async function register(name, email, password) {
     password,
   );
   await authSdk.updateProfile(credential.user, { displayName: name });
-  await syncAuthUser();
+  await syncAuthUser(name);
   try {
     await authSdk.sendEmailVerification(credential.user);
     return { user: credential.user, verificationSent: true };

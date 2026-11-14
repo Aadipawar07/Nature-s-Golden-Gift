@@ -12,6 +12,8 @@ const routes = [
   '/register',
   '/forgot-password',
   '/account',
+  '/account/profile',
+  '/account/addresses',
   '/account/orders',
   '/account/orders/demo',
   '/account/orders/demo/track',
@@ -28,6 +30,8 @@ const routes = [
 const widths = [320, 375, 768, 1024, 1440];
 
 test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('ngg.session', '1'));
+
   const variant = {
     label: '100g',
     weightGrams: 100,
@@ -75,6 +79,31 @@ test.beforeEach(async ({ page }) => {
       }),
     });
   });
+  await page.route('**/api/auth/**', async (route) => {
+    const requestUrl = new URL(route.request().url());
+    const data =
+      requestUrl.pathname.endsWith('/auth/sync') ||
+      requestUrl.pathname.endsWith('/auth/me')
+        ? {
+            id: 'e2e-user',
+            email: 'e2e@example.test',
+            name: 'E2E User',
+            phone: '',
+          }
+        : {};
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ success: true, data }),
+    });
+  });
+  await page.route('**/api/addresses**', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ success: true, data: [] }),
+    });
+  });
 });
 
 for (const route of routes) {
@@ -83,7 +112,7 @@ for (const route of routes) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(route);
       await expect(page.locator('main')).toBeVisible();
-      await expect(page.locator('main h1')).toBeVisible();
+      await expect(page.locator('main h1').first()).toBeVisible();
       const results = await new AxeBuilder({ page }).analyze();
       expect(
         results.violations,

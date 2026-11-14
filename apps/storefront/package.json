@@ -30,12 +30,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:e2e": "node -e \"process.env.VITE_E2E_FAKE_AUTH='true'; process.env.NGG_DISABLE_DOTENV='true'; import('vite').then(({ build }) => build()).catch(error => { console.error(error); process.exitCode = 1; })\"",
     "preview": "vite preview",
+    "check:production-auth": "node ../../scripts/check-storefront-fake-auth.mjs",
     "size": "node ../../scripts/check-storefront-size.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "test:quality": "npm run test && npm run build && npm run test:e2e",
+    "test:quality": "npm run test && npm run build && npm run check:production-auth && npm run build:e2e && npm run test:e2e",
     "lighthouse": "lhci autorun --config=lighthouserc.cjs"
   }
 }
