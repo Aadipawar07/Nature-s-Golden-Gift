@@ -15,7 +15,7 @@
     "dev:storefront": "npm run dev -w @ngg/storefront",
     "dev:crm": "npm run dev -w @ngg/crm",
     "dev:server": "npm run dev -w @ngg/server",
-    "build": "npm run build -w @ngg/storefront && npm run build -w @ngg/crm",
+    "build": "npm run build -w @ngg/storefront && npm run build -w @ngg/crm && npm run size -w @ngg/storefront",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
